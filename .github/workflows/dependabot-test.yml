@@ -8,6 +8,10 @@ on:
       - opened
       - synchronize
 
+permissions:
+  contents: write  # Allow write access to contents for merging PRs
+  pull-requests: write  # Allow write access to pull requests
+
 jobs:
   build-winui:
     runs-on: windows-latest  # Use Windows runner for WinUI projects
@@ -81,6 +85,5 @@ jobs:
         if: github.event.pull_request.user.login == 'dependabot[bot]'  # Only run on Dependabot PRs
         run: |
           gh pr merge ${{ github.event.pull_request.number }} --merge --admin --repo ${{ github.repository }}
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
